@@ -18,13 +18,20 @@ public class Snake : MonoBehaviour
 	private float gridMoveTimerMax;
 	private Vector2Int gridMoveDirection;
 	private controlDirection moveDirection;
+	private LevelGrid grid;
 
+	public void setup(LevelGrid grid) {
+		this.grid = grid;
+
+	}
 	private void Awake() {
 		gridPosition = new Vector2Int(10,10);
 		gridMoveTimerMax = snakeSpeed;
 		gridMoveTimer = gridMoveTimerMax; 
 		gridMoveDirection = new Vector2Int(0, pixelsToMove);
 	}
+
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -60,25 +67,25 @@ public class Snake : MonoBehaviour
 		if (Input.GetKey(KeyCode.UpArrow))
 		{
 			if(this.moveDirection != controlDirection.down) {
-				moveShip(controlDirection.up);
+				moveSnake(controlDirection.up);
 			}
 		}
 		if (Input.GetKey(KeyCode.DownArrow))
 		{
 			if(this.moveDirection != controlDirection.up) {
-				moveShip(controlDirection.down);
+				moveSnake(controlDirection.down);
 			}
 		}
 		if (Input.GetKey(KeyCode.LeftArrow))
 		{
 			if(this.moveDirection != controlDirection.right) {
-				moveShip(controlDirection.left);
+				moveSnake(controlDirection.left);
 			}
 		}
 		if (Input.GetKey(KeyCode.RightArrow))
 		{
 			if(this.moveDirection != controlDirection.left) {
-				moveShip(controlDirection.right);
+				moveSnake(controlDirection.right);
 			}
 		}
 		//now transform our game object to new position
@@ -87,7 +94,7 @@ public class Snake : MonoBehaviour
 
 	}
 
-	bool moveShip(controlDirection moveDirection)
+	bool moveSnake(controlDirection moveDirection)
 	{
 		// float degrees = 90;
 		// Vector2 to = new Vector3(degrees, 0, 0);
@@ -128,12 +135,15 @@ public class Snake : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-		Debug.Log("hit detected");
-		// GameObject e = Instantiate(snakeGameobject) as GameObject;
-		// e.transform.position = transform.position;
-		//snakeGameobject.gameObject.SetActive(false);
-		// Destroy(other.gameObject);
-		this.gameObject.SetActive(false);
+    	Debug.Log(other.name);
+    	if (other.name == "Food") {
+    		Destroy(other.gameObject);
+    		this.grid.SpawnFood();
+		} else {
+			this.gameObject.SetActive(false);
+		}
+
+		Debug.Log("hit detected" );
 
 	}
 }

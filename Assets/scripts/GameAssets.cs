@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameAssets : MonoBehaviour
 {
     public static GameAssets instance { get; private set; }
+    public Sprite snakeHeadSprite;
+    public Sprite foodSprite;
 
     private void Awake() {
     	if (instance == null) {
@@ -14,8 +16,9 @@ public class GameAssets : MonoBehaviour
      	}
     }
 
-    public Sprite snakeHeadSprite;
-    public Sprite foodSprite;
-
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("BANANA hit ");
+    }
 
 }

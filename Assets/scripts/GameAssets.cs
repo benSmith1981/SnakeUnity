@@ -18,7 +18,7 @@ public class GameAssets : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("BANANA hit ");
+        Debug.Log("BANANA hit dddd");
     }
 
 }
